@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reactivity with ES6 Proxy</title>
+</head>
+<style>
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+.page {
+  width: 100%;
+  max-width: 960px;
+  margin: 50px auto;
+}
+button {
+  width: 240px;
+  padding: 10px;
+  border: 0;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: lightseagreen;
+}
+button:hover {
+  background-color: grey;
+}
+</style>
+
+
+<body>
+<div class="page">
+    <button id="button">Click</button>
+
+    <p>Check the Browser console</p>
+
+    <script type="module">
+        import EventBus from './EventBus.js';
+
+        class App {
+            constructor() {}
+            init() {
+                const button = document.getElementById('button');
+                button.addEventListener('click', (e) => {
+                    EventBus.trigger('BUTTON_CLICKED', { data: e });
+                });
+                EventBus.trigger('APP_INITIALIZED', { data: this });
+            }
+        }
+
+        EventBus.on('APP_INITIALIZED', ({ data }) => {
+            console.log(`The application has been initialized: ${data}`);
+        });
+
+        EventBus.on('BUTTON_CLICKED', ({ data }) => {
+            console.log(`button was clicked: ${data.currentTarget}`);
+        });
+
+        window.App = new App();
+        window.App.init();
+    </script>
+</div>
+</body>
+</html>
