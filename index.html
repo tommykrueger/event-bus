@@ -53,11 +53,11 @@ button:hover {
         }
 
         EventBus.on('APP_INITIALIZED', ({ data }) => {
-            console.log(`The application has been initialized: ${data}`);
+            console.log(`EVENT: The application has been initialized: ${data}`);
         });
 
         EventBus.on('BUTTON_CLICKED', ({ data }) => {
-            console.log(`button was clicked: ${data.currentTarget}`);
+            console.log(`EVENT: button was clicked: ${data.currentTarget}`);
         });
 
         window.App = new App();
